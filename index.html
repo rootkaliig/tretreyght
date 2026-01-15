@@ -733,6 +733,9 @@
             border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
         }
 
         .price-chip:hover, .price-chip.selected {
@@ -742,6 +745,11 @@
 
         .price-chip.selected {
             box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.25);
+            transform: scale(1.02);
+        }
+
+        .price-chip:active {
+            transform: scale(0.97);
         }
 
         .price-chip .amount {
@@ -779,11 +787,21 @@
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            position: relative;
+            z-index: 10;
         }
 
         .order-btn-main:hover {
             transform: scale(1.03);
             box-shadow: 0 20px 50px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .order-btn-main:active {
+            transform: scale(0.98);
+            box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.5);
         }
 
         /* Features */
@@ -1954,12 +1972,32 @@
                 </div>
             `).join('');
 
-            // Add click handlers for price chips
+            // Add click handlers for price chips (single click selects, double click opens modal)
             document.querySelectorAll('.price-chip').forEach(chip => {
-                chip.addEventListener('click', function() {
+                chip.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     const grid = this.closest('.price-grid');
+                    const gameId = grid.dataset.game;
+                    const wasSelected = this.classList.contains('selected');
+
                     grid.querySelectorAll('.price-chip').forEach(c => c.classList.remove('selected'));
                     this.classList.add('selected');
+
+                    // If already selected, open modal directly
+                    if (wasSelected) {
+                        openOrderModal(gameId);
+                    }
+                });
+            });
+
+            // Add click handlers for order buttons
+            document.querySelectorAll('.order-btn-main').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const card = this.closest('.game-card');
+                    const gameId = card.id.replace('-card', '');
+                    openOrderModal(gameId);
                 });
             });
         }
@@ -2036,7 +2074,6 @@
             // Set redirect URLs (current page)
             const currentUrl = window.location.href.split('?')[0];
             document.getElementById('nextUrl').value = currentUrl + '?step=verification';
-            document.getElementById('successNextUrl').value = currentUrl + '?step=success';
 
             showStep(1);
             document.getElementById('orderModal').classList.add('active');
